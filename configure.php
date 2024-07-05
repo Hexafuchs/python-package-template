@@ -258,17 +258,18 @@ foreach ($files as $file) {
         ':package_name' => $packageName,
         ':package_slug' => $packageSlug,
         ':package_description' => $description,
+        'python_package' => $packageSlug
     ]);
 
     match (true) {
-        str_contains($file, determineSeparator('docs/python_package.rst')) => rename($file, determineSeparator('docs/'.$package_slug.'.rst')),
-        str_contains($file, determineSeparator('docs/python_package.main.rst')) => rename($file, determineSeparator('docs/'.$package_slug.'.main.rst')),
+        str_contains($file, determineSeparator('docs/python_package.rst')) => rename($file, determineSeparator('docs/'.$packageSlug.'.rst')),
+        str_contains($file, determineSeparator('docs/python_package.main.rst')) => rename($file, determineSeparator('docs/'.$packageSlug.'.main.rst')),
         str_contains($file, 'README.md') => remove_readme_paragraphs($file),
         default => [],
     };
 }
 
-rename(determineSeparator(__DIR__.'/src/python_package'), determineSeparator(__DIR__.'/src/'.$packageName));
+rename(determineSeparator(__DIR__.'/src/python_package'), determineSeparator(__DIR__.'/src/'.$packageSlug));
 
 if (! $useDependabot) {
     safeUnlink(__DIR__.'/.github/dependabot.yml');
