@@ -7,7 +7,7 @@ Submodules
 python\_package.hello\_world.hello\_world module
 ------------------------------------------------
 
-.. automodule:: python_package.hello_world.hello_world
+.. automodule:: python_package.main.hello_world
    :members:
    :undoc-members:
    :show-inheritance:
@@ -15,7 +15,7 @@ python\_package.hello\_world.hello\_world module
 Module contents
 ---------------
 
-.. automodule:: python_package.hello_world
+.. automodule:: python_package.main
    :members:
    :undoc-members:
    :show-inheritance:

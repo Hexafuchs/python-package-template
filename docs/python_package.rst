@@ -7,7 +7,7 @@ Subpackages
 .. toctree::
    :maxdepth: 4
 
-   python_package.hello_world
+   python_package.main
 
 Submodules
 ----------
