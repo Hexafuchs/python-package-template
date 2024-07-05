@@ -35,7 +35,17 @@ import :package_slug
 ## Testing
 
 ```bash
-python3 -m pytest
+# All
+./venv/bin/pytest -m ""
+
+# Unit
+./venv/bin/pytest -m "unit"
+
+# Integration
+./venv/bin/pytest -m "integration"
+
+# Unit and Integration
+./venv/bin/pytest -m "integration or unit"
 ```
 
 ## Changelog

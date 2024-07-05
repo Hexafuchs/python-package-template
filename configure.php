@@ -106,12 +106,12 @@ function determineSeparator(string $path): string
 
 function replaceForWindows(): array
 {
-    return preg_split('/\\r\\n|\\r|\\n/', run('dir /S /B * | findstr /v /i .git\ | findstr /v /i venv | findstr /v /i '.basename(__FILE__).' | findstr /r /i /M /F:/ ":author :vendor :package author@domain.com"'));
+    return preg_split('/\\r\\n|\\r|\\n/', run('dir /S /B * | findstr /v /i .git\ | findstr /v /i venv | findstr /v /i '.basename(__FILE__).' | findstr /r /i /M /F:/ ":author :vendor :package author@domain.com python_package"'));
 }
 
 function replaceForAllOtherOSes(): array
 {
-    return explode(PHP_EOL, run('grep -E -r -l -i ":author|:vendor|:package|author@domain.com" --exclude-dir=venv ./* ./.github/* | grep -v '.basename(__FILE__)));
+    return explode(PHP_EOL, run('grep -E -r -l -i ":author|:vendor|:package|author@domain.com|python_package" --exclude-dir=venv ./* ./.github/* | grep -v '.basename(__FILE__)));
 }
 
 function getGitHubApiEndpoint(string $endpoint): ?stdClass
@@ -282,10 +282,10 @@ if (! $useUpdateChangelogWorkflow) {
 }
 
 if (confirm('Install venv and install flit?', true)) {
-    run('python3 -m venv venv && ./venv/bin/python3 -m pip install flit');
+    writeln(run('python3 -m venv venv && ./venv/bin/python3 -m pip install flit'));
     if (confirm('Install dependencies?', true)) {
-       run('./venv/bin/flit install --only-deps --deps develop');
-       confirm('Run tests?') && run('./venv/bin/pytest');
+       writeln(run('./venv/bin/flit install --only-deps --deps develop'));
+       confirm('Run tests?') && writeln(run('./venv/bin/pytest -m "integration or unit"'));
     }
 }
 
