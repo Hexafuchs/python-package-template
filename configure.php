@@ -46,7 +46,7 @@ function str_after(string $subject, string $search): string
 
 function slugify(string $subject): string
 {
-    return strtolower(trim(preg_replace('/[^A-Za-z0-9-]+/', '-', $subject), '-'));
+    return str_replace('-', '_', strtolower(trim(preg_replace('/[^A-Za-z0-9-]+/', '-', $subject), '-')));
 }
 
 function title_case(string $subject): string
@@ -226,7 +226,6 @@ $folderName = basename($currentDirectory);
 
 $packageName = ask('Package name', $folderName);
 $packageSlug = slugify($packageName);
-$packageSlugWithoutPrefix = remove_prefix('laravel-', $packageSlug);
 
 $description = ask('Package description', "This is my package {$packageSlug}");
 
@@ -258,7 +257,6 @@ foreach ($files as $file) {
         'author@domain.com' => $authorEmail,
         ':package_name' => $packageName,
         ':package_slug' => $packageSlug,
-        ':package_slug_without_prefix' => $packageSlugWithoutPrefix,
         ':package_description' => $description,
     ]);
 
@@ -270,7 +268,7 @@ foreach ($files as $file) {
     };
 }
 
-rename(determineSeparator(__DIR__.'/src/python_package'), determineSeparator(__DIR__.'/src/'.$packageSlug));
+rename(determineSeparator(__DIR__.'/src/python_package'), determineSeparator(__DIR__.'/src/'.$packageName));
 
 if (! $useDependabot) {
     safeUnlink(__DIR__.'/.github/dependabot.yml');
@@ -282,6 +280,12 @@ if (! $useUpdateChangelogWorkflow) {
     safeUnlink(__DIR__.'/.github/workflows/update-changelog.yml');
 }
 
-confirm('Execute `python -m flit install --only-deps --deps develop` and run tests?', true) && run('python -m flit install --only-deps --deps develop && composer test');
+if (confirm('Install venv and install flit?', true)) {
+    run('python3 -m venv venv && ./venv/bin/python3 -m pip install flit');
+    if (confirm('Install dependencies?', true)) {
+       run('./venv/bin/flit install --only-deps --deps develop');
+       confirm('Run tests?') && run('./venv/bin/pytest');
+    }
+}
 
 confirm('Let this script delete itself?', true) && unlink(__FILE__);

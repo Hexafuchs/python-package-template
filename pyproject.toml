@@ -3,7 +3,7 @@ requires = ["flit_core >=2,<4"]
 build-backend = "flit_core.buildapi"
 
 [project]
-name =  ":package_slug"
+name =  ":package_name"
 authors = [
     {name = ":author_name", email = "author@domain.com"},
 ]

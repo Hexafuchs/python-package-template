@@ -1,9 +1,9 @@
 # :package_description
 
-[![Latest Version on PyPI](https://img.shields.io/pypi/pyversions/:package_slug?style=flat-square)](https://pypi.org/project/:package_slug)
-[![GitHub Tests Action Status](https://img.shields.io/github/actions/workflow/status/hexafuchs/:package_slug/run-tests.yml?branch=main&label=tests&style=flat-square)](https://github.com/hexafuchs/:package_slug/actions?query=workflow%3Arun-tests+branch%3Amain)
-[![GitHub Code Style Action Status](https://img.shields.io/github/actions/workflow/status/hexafuchs/:package_slug/fix-python-code-style-issues.yml?branch=main&label=code%20style&style=flat-square)](https://github.com/hexafuchs/:package_slug/actions?query=workflow%3A"Fix+Python+code+style+issues"+branch%3Amain)
-[![Total Downloads](https://img.shields.io/pypi/dm/:package_slug.svg?style=flat-square)](https://pypi.org/project/:package_slug)
+[![Latest Version on PyPI](https://img.shields.io/pypi/pyversions/:package_name?style=flat-square)](https://pypi.org/project/:package_name)
+[![GitHub Tests Action Status](https://img.shields.io/github/actions/workflow/status/hexafuchs/:package_name/run-tests.yml?branch=main&label=tests&style=flat-square)](https://github.com/hexafuchs/:package_name/actions?query=workflow%3Arun-tests+branch%3Amain)
+[![GitHub Code Style Action Status](https://img.shields.io/github/actions/workflow/status/hexafuchs/:package_name/fix-python-code-style-issues.yml?branch=main&label=code%20style&style=flat-square)](https://github.com/hexafuchs/:package_name/actions?query=workflow%3A"Fix+Python+code+style+issues"+branch%3Amain)
+[![Total Downloads](https://img.shields.io/pypi/dm/:package_name.svg?style=flat-square)](https://pypi.org/project/:package_name)
 
 <!--delete-->
 This repo can be used to scaffold a Python package. Unless you are a member of Hexafuchs, please use the
@@ -23,7 +23,7 @@ This is where your description should go. Limit it to a paragraph or two. Consid
 You can install the package via poetry (or another tool of your choosing that is capable to use pyproject.toml):
 
 ```bash
-poetry add :package_slug
+poetry add :package_name
 ```
 
 ## Usage
@@ -35,7 +35,7 @@ import :package_slug
 ## Testing
 
 ```bash
-composer test
+python3 -m pytest
 ```
 
 ## Changelog
