@@ -13,17 +13,18 @@
 import os
 import sys
 
-sys.path.insert(0, os.path.abspath("../src/"))
+sys.path.insert(0, os.path.abspath("../../src/"))
 
+import python_package
 
 # -- Project information -----------------------------------------------------
 
-project = ":package_slug docs"
+project = ":package_name docs"
 copyright = "2024, Hexafuchs"
 author = "Hexafuchs"
 
 # The full version, including alpha/beta/rc tags
-release = "0.0.1"
+release = python_package.__version__
 
 
 # -- General configuration ---------------------------------------------------
@@ -36,8 +37,12 @@ extensions = [
     "sphinx.ext.doctest",
     "sphinx.ext.intersphinx",
     "sphinx.ext.ifconfig",
-    "sphinx.ext.viewcode",  # Add links to highlighted source code
     "sphinx.ext.napoleon",  # to render Google format docstrings
+    "sphinx_autodoc_typehints",  # Use type hints
+    "sphinx.ext.viewcode",  # Add links to highlighted source code
+    "sphinx.ext.autosummary",
+    "autodocsumm",
+    "sphinx_mdinclude",
     "sphinx.ext.githubpages",
 ]
 
@@ -65,3 +70,19 @@ html_static_path = ["_static"]
 # Napoleon settings
 napoleon_include_init_with_doc = True
 napoleon_include_private_with_doc = True
+
+autodoc_typehints = "both"
+autodoc_class_signature = "mixed"
+autodoc_default_options = {
+    "members": True,
+    "member-order": "bysource",
+    "special-members": "__init__",
+    "undoc-members": True,
+    "show-inheritance": True,
+    "autosummary": True,
+}
+autodoc_type_aliases = {"SharkeyId": "SharkeyId"}
+
+autosummary_generate = True
+
+md_parse_relative_links = True
