@@ -7,7 +7,7 @@
 
 <!--delete-->
 This repo can be used to scaffold a Python package. Unless you are a member of Hexafuchs, please use the
-[Original Template by Microsoft](https://github.com/microsoft/python-package-template).
+[Original Template by Microsoft](https://github.com/microsoft/python-package-template) or edit out any references to us.
 
 Follow these steps to get started:
 
