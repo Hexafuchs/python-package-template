@@ -7,6 +7,14 @@
 
 from __future__ import annotations
 
+from .types import Id
+
+__all__ = ["get_id", "hello_world", "hello_goodbye", "good_night"]
+
+
+def get_id() -> Id:
+    return "SomeId"
+
 
 def hello_world(i: int = 0) -> str:
     """Doc String."""
