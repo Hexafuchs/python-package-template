@@ -14,16 +14,16 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Install Poetry
-        run: pipx install poetry
+      - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          cache: 'poetry'
+          python-version: "3.12"
 
       - name: Install dependencies
         run: |
-          poetry install
-          echo "$(poetry env info --path)/bin" >> $GITHUB_PATH
+          python -m pip install --upgrade pip
+          python -m pip install flit
+          flit install
 
       - name: Run Pylint
         run: python -m pylint --rcfile=pyproject.toml
