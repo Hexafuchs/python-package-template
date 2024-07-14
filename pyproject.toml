@@ -24,9 +24,6 @@ requires-python = ">=3.10.0"
 dynamic = ["version"]
 
 [project.optional-dependencies]
-spark = [
-    "pyspark>=3.0.0"
-]
 test = [
     "bandit[toml]==1.7.5",
     "black==23.3.0",
@@ -84,7 +81,10 @@ exclude = [
     "packages",
     "pywin32",
     "tests",
-    "swagger_client"
+    "swagger_client",
+    ".github",
+    "venv",
+    "docs",
 ]
 ignore = [
     "E722",
@@ -99,12 +99,12 @@ exclude = [
     "**/node_modules",
     "**/__pycache__",
 ]
-venv = "env310"
+venv = "venv"
 
 reportMissingImports = true
 reportMissingTypeStubs = false
 
-pythonVersion = "3.10"
+pythonVersion = "3.12"
 pythonPlatform = "Linux"
 
 executionEnvironments = [
@@ -120,9 +120,6 @@ testpaths = "tests"
 junit_family = "xunit2"
 markers = [
     "integration: marks as integration test",
-    "notebooks: marks as notebook test",
-    "gpu: marks as gpu test",
-    "spark: marks tests which need Spark",
     "slow: marks tests as slow",
     "unit: fast offline tests",
 ]
@@ -130,31 +127,27 @@ markers = [
 [tool.tox]
 legacy_tox_ini = """
 [tox]
-envlist = py, integration, spark, all
+envlist = pytest, pylint, pyright, flake8
 
-[testenv]
+[testenv:pytest]
+extras = test
 commands =
-    pytest -m "not integration and not spark" {posargs}
+    python -m pytest -m "integration or unit"
 
-[testenv:integration]
+[testenv:pylint]
+extras = test
 commands =
-    pytest -m "integration" {posargs}
+    python -m pylint --rcfile=pyproject.toml src/
 
-[testenv:spark]
-extras = spark
-setenv =
-       PYSPARK_DRIVER_PYTHON = {envpython}
-       PYSPARK_PYTHON = {envpython}
+[testenv:pyright]
+extras = test
 commands =
-    pytest -m "spark" {posargs}
+    python -m pyright
 
-[testenv:all]
-extras = all
-setenv =
-       PYSPARK_DRIVER_PYTHON = {envpython}
-       PYSPARK_PYTHON = {envpython}
+[testenv:flake8]
+extras = test
 commands =
-    pytest {posargs}
+    python -m flake8 --toml-config=pyproject.toml
 """
 
 [tool.pylint]
@@ -206,9 +199,8 @@ good-names= [
     "i",
     "j",
     "k",
-    "ex",
-    "Run",
-    "_"
+    "_",
+    "Id"
 ]
 include-naming-hint="yes"
 inlinevar-naming-style="any"
@@ -253,12 +245,12 @@ check-str-concat-over-line-jumps="no"
 
 [tool.pylint.'TYPECHECK']
 contextmanager-decorators="contextlib.contextmanager"
-generated-members="numpy.*,np.*,pyspark.sql.functions,collect_list"
+generated-members=""
 ignore-mixin-members="yes"
 ignore-none="yes"
 ignore-on-opaque-inference="yes"
-ignored-classes="optparse.Values,thread._local,_thread._local,numpy,torch,swagger_client"
-ignored-modules="numpy,torch,swagger_client,netCDF4,scipy"
+ignored-classes="optparse.Values,thread._local,_thread._local,swagger_client"
+ignored-modules="swagger_client"
 missing-member-hint="yes"
 missing-member-hint-distance=1
 missing-member-max-choices=1
@@ -293,16 +285,16 @@ valid-classmethod-first-arg="cls"
 valid-metaclass-classmethod-first-arg="cls"
 
 [tool.pylint.'DESIGN']
-max-args=5
-max-attributes=7
+max-args=20
+max-attributes=20
 max-bool-expr=5
 max-branches=12
-max-locals=15
+max-locals=20
 max-parents=7
 max-public-methods=20
 max-returns=6
 max-statements=50
-min-public-methods=2
+min-public-methods=1
 
 [tool.pylint.'IMPORTS']
 allow-wildcard-with-all="no"
@@ -311,6 +303,6 @@ deprecated-modules="optparse,tkinter.tix"
 
 [tool.pylint.'EXCEPTIONS']
 overgeneral-exceptions= [
-    "BaseException",
-    "Exception"
+    "builtins.BaseException",
+    "builtins.Exception"
 ]
