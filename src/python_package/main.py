@@ -2,7 +2,7 @@
 #   Copyright (c) Hexafuchs. All rights reserved.
 #   Licensed under the MIT License. See LICENSE in project root for information.
 #   ---------------------------------------------------------------------------------
-"""This is a Sample Python file."""
+"""This is the module for the core logic."""
 
 
 from __future__ import annotations
