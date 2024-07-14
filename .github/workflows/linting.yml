@@ -26,7 +26,7 @@ jobs:
           flit install
 
       - name: Run Pylint
-        run: python -m pylint --rcfile=pyproject.toml
+        run: python -m pylint --rcfile=pyproject.toml src/
 
       - name: Run pyright
         run: python -m pyright
