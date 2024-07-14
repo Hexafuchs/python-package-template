@@ -14,13 +14,15 @@ Follow these steps to get started:
 1. Press the "Use this template" button at the top of this repo to create a new repo with the contents of this skeleton.
 2. Run "php ./configure.php" to run a script that will replace all placeholders throughout all the files.
 3. Have fun creating your package.
+
+Note: Remember to activate discussions and pages in the repository settings. Set pages to workflow.
 <!--/delete-->
 
 This is where your description should go. Limit it to a paragraph or two. Consider adding a small example.
 
 ## Installation
 
-You can install the package via poetry (or another tool of your choosing that is capable to use pyproject.toml):
+You can install the package via poetry (or another tool of your choosing):
 
 ```bash
 poetry add :package_name
@@ -31,6 +33,8 @@ poetry add :package_name
 ```php
 import :package_slug
 ```
+
+Checkout the docstring or API docs for more usage information.
 
 ## Testing
 
@@ -48,10 +52,61 @@ import :package_slug
 ./venv/bin/pytest -m "integration or unit"
 ```
 
+## Development
+
+### Installing flit and development dependencies
+
+```bash
+python3 -m venv venv
+./venv/bin/python -m pip install --upgrade pip
+./venv/bin/python -m pip install flit
+./venv/bin/flit install --only-deps --deps develop
+```
+
+### Run linter
+
+```bash
+./venv/bin/tox
+```
+
+## Create documentation locally
+
+Make sure you have installed the dependencies.
+```
+cd docs
+make clean
+make html
+```
+
+> You can find the documentation under `docs/_build/html/index.html`
+
+### Installing new dependencies
+
+Either add the dependency to the optional dependencies, or create a new dependency within the `[project]` namespace, e.g.:
+
+```toml
+[project]
+...
+dependencies = [
+    "requests==2.32.3"
+]
+```
+
+Then, install dependencies with flit:
+
+```bash
+./venv/bin/flit install --only-deps --deps develop
+# or: ./venv/bin/flit install --only-deps --deps all
+```
+
+## API Docs
+
+You can find the API Documentation [here](https://hexafuchs.github.io/sharkey-crawler/).
+
 ## Changelog
 
-Please see [CHANGELOG](CHANGELOG.md) for more information on what has changed recently.
+Please see [CHANGELOG](https://github.com/Hexafuchs/:package_name/blob/main/CHANGELOG.md) for more information on what has changed recently.
 
 ## License
 
-The MIT License (MIT). Please see [License File](LICENSE.md) for more information.
+The MIT License (MIT). Please see [License File](https://github.com/Hexafuchs/:package_name/blob/main/LICENSE.md) for more information.
