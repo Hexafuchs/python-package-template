@@ -215,7 +215,7 @@ function guessGitHubVendorInfo($authorName, $username): array
 }
 
 $gitName = run('git config user.name');
-$authorName = ask('Author name', $gitName);
+$authorName = ask('Author display name', $gitName);
 
 $gitEmail = run('git config user.email');
 $authorEmail = ask('Author email', $gitEmail);
@@ -224,10 +224,10 @@ $authorUsername = ask('Author username', guessGitHubUsername());
 $currentDirectory = getcwd();
 $folderName = basename($currentDirectory);
 
-$packageName = ask('Package name', $folderName);
+$packageName = ask('Package name (should be the same name as the repo, "-" will be replaced with "_" for the module)', $folderName);
 $packageSlug = slugify($packageName);
 
-$description = ask('Package description', "This is my package {$packageSlug}");
+$description = ask('Package short description', "This is my package {$packageSlug}");
 
 $useDependabot = confirm('Enable Dependabot?', true);
 $useUpdateChangelogWorkflow = confirm('Use automatic changelog updater workflow?', true);
@@ -258,7 +258,8 @@ foreach ($files as $file) {
         ':package_name' => $packageName,
         ':package_slug' => $packageSlug,
         ':package_description' => $description,
-        'python_package' => $packageSlug
+        'python_package' => $packageSlug,
+        'python\\_package' => str_replace('_', '\\_', $package_slug)
     ]);
 
     match (true) {
