@@ -259,7 +259,8 @@ foreach ($files as $file) {
         ':package_slug' => $packageSlug,
         ':package_description' => $description,
         'python_package' => $packageSlug,
-        'python\\_package' => str_replace('_', '\\_', $package_slug)
+        'package_name' => $packageSlug,
+        'package\\_name' => str_replace('_', '\\_', $packageSlug)
     ]);
 
     match (true) {
